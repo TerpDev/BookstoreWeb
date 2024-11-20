@@ -1,0 +1,40 @@
+﻿using Bookstore.Models;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;  
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+
+namespace BookStore.Models
+{
+    public class Product
+    {
+        public int Id { get; set; }
+        [Required, MaxLength(100), Display(Name = "Titel")]
+        public string Title { get; set; } = string.Empty;
+        [Display(Name = "Omschrijving")]
+        public string Description { get; set; }
+        [Required, RegularExpression(@"^(?=(?:\D*\d) (10) (?:(?:\D*\d){3})?$)[\d-]+$")]
+        public string ISBN { get; set; } = string.Empty;
+        [Required, MaxLength(100), Display(Name = "Schrijver")]
+        public string Author { get; set; } = string.Empty;
+        [Required, Display(Name = "Catalogusprijs")]
+        public string ListPrice { get; set; } = string.Empty;
+        [Required, Display(Name = "Prijs")]
+        public string Price { get; set; } = string.Empty;
+        [Required, Display(Name = "Prijs bij 50+ afname")]
+        public string Price50 { get; set; } = string.Empty;
+        [Required, Display(Name = "Prijs bij 100+ afname")]
+        public string Price100 { get; set; } = string.Empty;
+        public string? ImageUrl { get; set; }
+
+        [Required, Display(Name = "Categorie")]
+        public int CategoryId { get; set; }
+        public Category? category { get; set; }
+        [Required, Display(Name = "Soort kaft")]
+        public int CoverTypeId { get; set; }
+        public CoverType? CoverType { get; set; }
+    }
+}
