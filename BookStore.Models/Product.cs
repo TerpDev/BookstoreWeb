@@ -15,19 +15,19 @@ namespace BookStore.Models
         [Required, MaxLength(100), Display(Name = "Titel")]
         public string Title { get; set; } = string.Empty;
         [Display(Name = "Omschrijving")]
-        public string Description { get; set; }
-        [Required, RegularExpression(@"^(?=(?:\D*\d) (10) (?:(?:\D*\d){3})?$)[\d-]+$")]
+        public string? Description { get; set; }
+        [Required, RegularExpression(@"^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$")]
         public string ISBN { get; set; } = string.Empty;
         [Required, MaxLength(100), Display(Name = "Schrijver")]
         public string Author { get; set; } = string.Empty;
         [Required, Display(Name = "Catalogusprijs")]
-        public string ListPrice { get; set; } = string.Empty;
+        public double ListPrice { get; set; }
         [Required, Display(Name = "Prijs")]
-        public string Price { get; set; } = string.Empty;
+        public double Price { get; set; }
         [Required, Display(Name = "Prijs bij 50+ afname")]
-        public string Price50 { get; set; } = string.Empty;
+        public double Price50 { get; set; }
         [Required, Display(Name = "Prijs bij 100+ afname")]
-        public string Price100 { get; set; } = string.Empty;
+        public double Price100 { get; set; }
         public string? ImageUrl { get; set; }
 
         [Required, Display(Name = "Categorie")]

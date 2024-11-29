@@ -1,6 +1,7 @@
 ﻿using Bookstore.DataAccess;
 using BookStore.DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq.Expressions;
 
 namespace BookStore.DataAccess.Repository
@@ -18,18 +19,33 @@ namespace BookStore.DataAccess.Repository
         {   
             dbSet.Add(entity);
         }
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(string? includeProperties = null)
         {
-            IQueryable<T> query = dbSet.AsQueryable(); 
+            IQueryable<T> query = dbSet; 
+            if(includeProperties != null)
+			{
+				foreach (var prop in includeProperties.Split(',', StringSplitOptions.RemoveEmptyEntries))
+				{
+					query = query.Include(prop);
+				}
+			}
             return query.ToList();
         }
-        public T GetFirstOrDefault(Expression<Func<T, bool>> filter) 
-        {
-            IQueryable<T> query = dbSet.AsQueryable();
-            query = query.Where(filter); 
-            return query.FirstOrDefault();
-        }
-        public void Remove(T entity)
+		public T GetFirstOrDefault(Expression<Func<T, bool>> filter, string? includeProperties = null)
+		{
+			IQueryable<T> query = dbSet;
+			query = query.Where(filter);
+			if (includeProperties != null)
+			{
+				foreach (var prop in includeProperties.Split(',', StringSplitOptions.RemoveEmptyEntries))
+				{
+					query = query.Include(prop);
+				}
+			}
+			return query.FirstOrDefault()!;
+		}
+
+		public void Remove(T entity)
         {
             dbSet.Remove(entity);
         }
